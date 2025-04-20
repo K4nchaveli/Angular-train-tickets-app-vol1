@@ -1,1 +1,80 @@
 <p>home მთავარი კონტენტისთვის მჭირდება</p>
+
+
+<div class="search-form">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <label>
+        გამგზავრება:
+        <select formControlName="from">
+          <option *ngFor="let station of stations" [value]="station.id">
+            {{ station.name }}
+          </option>
+        </select>
+      </label>
+  
+      <label>
+        ჩასვლა:
+        <select formControlName="to">
+          <option *ngFor="let station of stations" [value]="station.id">
+            {{ station.name }}
+          </option>
+        </select>
+      </label>
+  
+      <label>
+        თარიღი:
+        <input type="date" formControlName="date" />
+      </label>
+
+      <label>
+        მგზავრები:
+        <input type="number" formControlName="passengers" min="1" />
+      </label>
+      
+  
+      <button type="submit">მოძებნა</button>
+    </form>
+  </div>
+  
+  <div class="results" *ngIf="departures.length">
+    <h3>ნაპოვნი მატარებლები:</h3>
+    <div *ngFor="let train of departures" class="trainCard">
+      <div class="trainsItems">
+        <div class="informationTable">
+          <div class="departure">
+            <p class="station">{{ train.from }}</p>
+            <p class="dates">{{ train.date }}</p>
+            <p class="times">გასვლის დრო: {{ train.departure }}</p>
+          </div>
+  
+          <div class="lines"></div>
+  
+          <div class="infoOfTrain">
+            <p class="numberOfTrain">მატარებლის ნომერი: {{ train.number }}</p>
+          </div>
+  
+          <div class="lines"></div>
+  
+          <div class="arrive">
+            <p class="station">{{ train.to }}</p>
+            <p class="dates">{{ train.date }}</p>
+            <p class="times">ჩასვლის დრო: {{ train.arrive }}</p>
+          </div>
+        </div>
+  
+        <div class="trainPickBtn">
+          <button (click)="selectTrain(train.id)">
+            აირჩიეთ (მგზავრები: {{ searchForm.value.passengers }})
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <p>სადგურების რაოდენობა: {{ stations.length }}</p>
+  <pre>{{ stations | json }}</pre>
+
+
+ 
+  

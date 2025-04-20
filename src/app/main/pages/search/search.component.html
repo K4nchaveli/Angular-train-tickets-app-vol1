@@ -1,1 +1,39 @@
 <p>search works!</p>
+<form (ngSubmit)="onSubmit()" class="search-form">
+    <label>
+      From:
+      <select [(ngModel)]="from" name="from" required>
+        <option *ngFor="let station of stations" [value]="station">{{ station }}</option>
+      </select>
+    </label>
+  
+    <label>
+      To:
+      <select [(ngModel)]="to" name="to" required>
+        <option *ngFor="let station of stations" [value]="station">{{ station }}</option>
+      </select>
+    </label>
+  
+    <label>
+      Date:
+      <input type="date" [(ngModel)]="date" name="date" required />
+    </label>
+  
+    <label>
+      Passengers:
+      <input type="number" [(ngModel)]="passengers" name="passengers" min="1" required />
+    </label>
+  
+    <button type="submit">Search Trains</button>
+  </form>
+  
+  <div class="results" *ngIf="trains.length > 0">
+    <h3>Available Trains</h3>
+    <div *ngFor="let train of trains" class="train-card">
+      <p><strong>Train Number:</strong> {{ train.trainNumber }}</p>
+      <p><strong>Departure:</strong> {{ train.departureTime }}</p>
+      <p><strong>Arrival:</strong> {{ train.arrivalTime }}</p>
+      <button (click)="goToBooking(train.id)">Book</button>
+    </div>
+  </div>
+  
